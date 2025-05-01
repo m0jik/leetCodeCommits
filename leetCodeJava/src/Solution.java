@@ -1,40 +1,26 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
 class Solution {
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode dummy_head = new ListNode(0);
-        ListNode l3 = dummy_head;
-
-        int carry = 0;
-        while (l1 != null || l2 != null) {
-            int l1_val = (l1 != null) ? l1.val : 0;
-            int l2_val = (l2 != null) ? l2.val: 0;
-            int current_sum = l1_val + l2_val + carry;
-            carry = current_sum / 10;
-            int last_digit = current_sum % 10;
-
-            ListNode new_node = new ListNode(last_digit);
-            l3.next = new_node;
-
-            if (l1 != null) l1 = l1.next;
-            if (l2 != null) l2 = l2.next;
-            l3 = l3.next;
+    public int lengthOfLongestSubstring(String s) {
+        int begin = 0;
+        int longest = 0;
+        for (int i = 0; i < s.length(); i++) {
+            String subStr = s.substring(begin, i);
+            String temp = Character.toString(s.charAt(i));
+            if (subStr.contains(temp)) {
+                longest = Math.max(longest, subStr.length());
+                begin = s.indexOf(temp, begin) + 1;
+            }
         }
+        longest = Math.max(longest, s.length() - begin);
+        return longest;
+    }
 
-        if (carry > 0) {
-            ListNode new_node = new ListNode(carry);
-            l3.next = new_node;
-            l3 = l3.next;
-        }
-
-        return dummy_head.next;
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        String s1 = "abcabcbb";
+        String s2 = "bbbbb";
+        String s3 = "pwwkew";
+        System.out.println("DEBUG: String 1 Output: " + solution.lengthOfLongestSubstring(s1));
+        System.out.println("DEBUG: String 2 Output: " + solution.lengthOfLongestSubstring(s2));
+        System.out.println("DEBUG: String 3 Output: " + solution.lengthOfLongestSubstring(s3));
     }
 }
